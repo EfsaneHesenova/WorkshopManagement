@@ -19,7 +19,7 @@ namespace WorkShopManagement.DAL.Repositories.Implementations
             _context = context;
         }
         DbSet<Tentity> table => _context.Set<Tentity>();
-        public async Task<Tentity> CreateASync(Tentity entity)
+        public async Task<Tentity> CreateAsync(Tentity entity)
         {
           await table.AddAsync(entity);
           return entity;
@@ -28,12 +28,12 @@ namespace WorkShopManagement.DAL.Repositories.Implementations
 
         public void Delete(Tentity entity)
         {
-            throw new NotImplementedException();
+            table.Remove(entity);
         }
 
         public async Task<ICollection<Tentity>> GetAllAsync()
         {
-            return await table.ToListAsync();
+           return await table.ToListAsync();
         }
 
         public async Task<Tentity> GetByIdAsync(int id)
@@ -41,14 +41,14 @@ namespace WorkShopManagement.DAL.Repositories.Implementations
             return await table.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public Task<int> SaveChangesAsync()
+        public async Task<int> SaveChangesAsync()
         {
-            throw new NotImplementedException();
+           return await _context.SaveChangesAsync();
         }
 
         public void Update(Tentity entity)
         {
-            throw new NotImplementedException();
+            table.Update(entity);
         }
     }
 }
